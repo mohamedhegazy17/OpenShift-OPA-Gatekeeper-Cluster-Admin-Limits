@@ -35,7 +35,7 @@ To keep things organized, we recommend saving your YAML files in the following s
 └── 3-constraints/
     ├── constraint-users.yaml     # Enforces the User limit (e.g., 10)
     └── constraint-groups.yaml    # Enforces the Group limit (e.g., 3)
-
-⚙️ Deployment Steps & Configuration Files
+```
+## ⚙️ Deployment Steps & Configuration Files
 Step One
 Create the sync file to load the existing roles assigned. Save the following as 1-sync/sync-config.yaml:
