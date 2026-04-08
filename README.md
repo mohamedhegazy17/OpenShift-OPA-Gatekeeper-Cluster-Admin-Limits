@@ -41,5 +41,23 @@ To keep things organized, we recommend saving your YAML files in the following s
 Create the sync file to load the existing roles assigned.
 Run the following command:
 ```text
-oc apply -f 1-sync/sync-config.yaml
+oc apply -f sync/sync-config.yaml
 ```
+**⏳ Wait a moment: Give Gatekeeper a few seconds to populate its cache before proceeding.**
+
+2) Create the constraint template based on your needed users/groups, and it will create a CRD on your cluster to validate the incoming request.
+Run the following commands:
+```text
+oc apply -f constraint-templates/template-users.yaml
+oc apply -f constraint-templates/template-groups.yaml
+```
+
+3) Create the number of max users/groups need to be assigned.
+Run the following commands:
+```text
+oc apply -f 3-constraints/constraint-users.yaml
+oc apply -f 3-constraints/constraint-groups.yaml
+```
+
+## ⚠️ Important Note
+OpenShift has built-in system users (like system:admin) that are technically cluster-admin. It will be counted in the user calculation by OPA Gatekeeper. Ensure you account for these default accounts when determining your maximum limit threshold.
