@@ -22,20 +22,6 @@ Before deploying these policies, ensure you have:
 
 ---
 
-## 📂 Suggested Repository Structure
-
-To keep things organized, we recommend saving your YAML files in the following structure:
-
-```text
-├── 1-sync/
-│   └── sync-config.yaml          # Enables data replication for RoleBindings
-├── 2-templates/
-│   ├── template-users.yaml       # Rego logic for counting users
-│   └── template-groups.yaml      # Rego logic for counting groups
-└── 3-constraints/
-    ├── constraint-users.yaml     # Enforces the User limit (e.g., 10)
-    └── constraint-groups.yaml    # Enforces the Group limit (e.g., 3)
-```
 ## ⚙️ Deployment Steps & Configuration Files
 1)
 Create the sync file to load the existing roles assigned.
