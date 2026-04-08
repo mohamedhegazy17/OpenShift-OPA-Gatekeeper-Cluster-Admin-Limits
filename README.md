@@ -1,7 +1,7 @@
 # 🛡️ OpenShift OPA Gatekeeper: Cluster Admin Limits
 
-[![OpenShift](https://img.shields.io/badge/OpenShift-4.x-red?logo=redhat)](https://www.openshift.com/)
-[![OPA Gatekeeper](https://img.shields.io/badge/OPA-Gatekeeper-blue?logo=openpolicyagent)](https://openpolicyagent.github.io/gatekeeper/website/docs/)
+[![OpenShift](https://img.shields.io/badge/OpenShift-4.x-red?logo=redhat)]
+[![OPA Gatekeeper](https://img.shields.io/badge/OPA-Gatekeeper-blue?logo=openpolicyagent)]
 
 This repository contains OpenShift-specific OPA Gatekeeper policies designed to strictly control and limit the number of `cluster-admin` assignments in your cluster. 
 
