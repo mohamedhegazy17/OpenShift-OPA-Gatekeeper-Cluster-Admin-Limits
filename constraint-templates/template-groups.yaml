@@ -1,0 +1,50 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: limitclusteradmingroups
+spec:
+  crd:
+    spec:
+      names:
+        kind: LimitClusterAdminGroups
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            maxAdminGroups:
+              type: integer
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package limitclusteradmingroups
+
+        violation[{"msg": msg}] {
+          input.review.kind.kind == "ClusterRoleBinding"
+          input.review.object.roleRef.name == "cluster-admin"
+          
+          max_groups := input.parameters.maxAdminGroups
+          
+          existing_crbs := {crb | 
+            crb := data.inventory.cluster["rbac.authorization.k8s.io/v1"].ClusterRoleBinding[_]
+            crb.metadata.name != input.review.object.metadata.name
+            crb.roleRef.name == "cluster-admin"
+          }
+          
+          existing_groups := {subject.name |
+            crb := existing_crbs[_]
+            subject := crb.subjects[_]
+            subject.kind == "Group"
+          }
+          
+          request_groups := {subject.name |
+            subject := input.review.object.subjects[_]
+            subject.kind == "Group"
+          }
+          
+          all_groups := existing_groups | request_groups
+          total_count := count(all_groups)
+          
+          total_count > max_groups
+          
+          msg := sprintf("Denied: Assigning this group to cluster-admin exceeds the maximum limit of %v groups. The total would be %v.", [max_groups, total_count])
+        }
