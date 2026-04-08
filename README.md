@@ -23,8 +23,7 @@ Before deploying these policies, ensure you have:
 ---
 
 ## ⚙️ Deployment Steps & Configuration Files
-1)
-Create the sync file to load the existing roles assigned.
+1) Create the sync file to load the existing roles assigned.
 Run the following command:
 ```text
 oc apply -f sync/sync-config.yaml
